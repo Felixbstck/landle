@@ -1,0 +1,729 @@
+:root {
+  --paper: #f3efe6;
+  --paper-2: #ebe5d8;
+  --ink: #1c1a17;
+  --muted: #6f685c;
+  --rule: #cfc7b6;
+  --accent: #b4442a;
+  --good: #2f6b4f;
+
+  --serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #161512;
+    --paper-2: #1f1d19;
+    --ink: #ebe5d8;
+    --muted: #9b9386;
+    --rule: #3a362f;
+    --accent: #e07656;
+    --good: #7bb894;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+.page {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+
+/* ---------- Masthead ---------- */
+
+.masthead {
+  border-top: 3px double var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 10px 0 14px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.masthead__meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.masthead__meta--bottom {
+  margin-top: 14px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+}
+
+.masthead__title {
+  font-size: clamp(56px, 14vw, 88px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin: 14px 0 10px;
+  font-variation-settings: "opsz" 72;
+}
+
+.masthead__sub {
+  margin: 0 auto;
+  max-width: 31em;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+/* ---------- Shared bits ---------- */
+
+.eyebrow {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0 18px;
+  height: 44px;
+  cursor: pointer;
+  border-radius: 0;
+  white-space: nowrap;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn:disabled {
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--rule);
+  cursor: default;
+}
+
+.btn:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Clues ---------- */
+
+.clues {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--rule);
+  margin: 22px 0 24px;
+}
+
+.clue {
+  padding: 10px 14px 12px;
+}
+
+.clue + .clue {
+  border-left: 1px solid var(--rule);
+}
+
+.clue__value {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.clue.is-shown .clue__value {
+  margin-top: 0;
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--ink);
+}
+
+/* ---------- Ledger (guesses) ---------- */
+
+.ledger {
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 28px;
+}
+
+.ledger__row {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) 92px 64px 92px;
+  gap: 10px;
+  align-items: center;
+  min-height: 46px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ledger__row > span:first-child {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.ledger__head {
+  min-height: 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ledger__name {
+  font-size: 19px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ledger__blank {
+  height: 1px;
+  align-self: center;
+  border-bottom: 1px dotted var(--rule);
+}
+
+.ledger__row .num {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 14px;
+}
+
+.ledger__row .center {
+  text-align: center;
+}
+
+.ledger__row.is-correct .ledger__name {
+  color: var(--good);
+  font-weight: 600;
+}
+
+.ledger__row.is-correct {
+  background: color-mix(in srgb, var(--good) 8%, transparent);
+}
+
+.dir {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.dir__label {
+  width: 2ch;
+  text-align: left;
+  color: var(--muted);
+}
+
+.needle {
+  color: var(--accent);
+  transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.tick {
+  color: var(--good);
+  font-size: 18px;
+}
+
+.prox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.prox__bar {
+  width: 36px;
+  height: 3px;
+  background: var(--rule);
+  position: relative;
+}
+
+.prox__bar > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--ink);
+}
+
+.is-correct .prox__bar > span {
+  background: var(--good);
+}
+
+/* ---------- Input ---------- */
+
+.guess-input__row {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.combo {
+  position: relative;
+  flex: 1;
+}
+
+.combo input {
+  width: 100%;
+  height: 44px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  background: transparent;
+  font-size: 20px;
+  border-radius: 0;
+}
+
+.combo input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.combo input::placeholder {
+  color: var(--muted);
+  opacity: 0.75;
+}
+
+.combo__list {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--paper-2);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.combo__list li {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.combo__list li.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.combo__list mark {
+  background: none;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.guess-input__msg {
+  margin: 8px 0 0;
+  min-height: 1.5em;
+  font-size: 15px;
+  color: var(--accent);
+}
+
+/* ---------- Result ---------- */
+
+.result {
+  border-top: 1px solid var(--ink);
+  padding: 18px 0 10px;
+}
+
+.result__headline {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 4px 0 22px;
+  letter-spacing: -0.01em;
+}
+
+.result__headline strong {
+  font-weight: 600;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 0 22px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.stats > div {
+  padding: 10px 0;
+}
+
+.stats > div + div {
+  border-left: 1px solid var(--rule);
+  padding-left: 12px;
+}
+
+.stats dt {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stats dd {
+  margin: 0;
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.dist {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 24px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.dist__row {
+  display: grid;
+  grid-template-columns: 14px 1fr 3ch;
+  gap: 10px;
+  align-items: center;
+}
+
+.dist__label,
+.dist__n {
+  color: var(--muted);
+}
+
+.dist__n {
+  text-align: right;
+}
+
+.dist__track {
+  height: 10px;
+}
+
+.dist__bar {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  background: var(--rule);
+}
+
+.dist__row.is-current .dist__bar {
+  background: var(--accent);
+}
+
+.dist__row.is-current .dist__label,
+.dist__row.is-current .dist__n {
+  color: var(--ink);
+}
+
+.result__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.next {
+  text-align: right;
+}
+
+.countdown {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Mode tabs ---------- */
+
+.tabs {
+  display: flex;
+  gap: 18px;
+}
+
+.tabs a {
+  color: var(--muted);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+
+.tabs a:hover {
+  color: var(--ink);
+}
+
+.tabs a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.sep {
+  color: var(--rule);
+  margin: 0 4px;
+}
+
+/* ---------- Practice ---------- */
+
+.practice-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: -4px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.link {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--ghost {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn--ghost:hover {
+  color: var(--paper);
+}
+
+.result__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Map ---------- */
+
+.map {
+  margin: 0 0 22px;
+}
+
+.map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.map__sea {
+  fill: var(--paper);
+}
+
+.map__grid {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 0.5;
+  stroke-dasharray: 1 3;
+}
+
+.map__land {
+  fill: var(--paper-2);
+  stroke: var(--rule);
+  stroke-width: 0.6;
+  transition: fill 300ms ease;
+}
+
+.map__land.is-guessed {
+  fill: var(--accent);
+}
+
+.map__land.is-answer {
+  fill: var(--good);
+  fill-opacity: 0.85;
+}
+
+.map__route {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.55;
+}
+
+.map__target {
+  fill: none;
+  stroke: var(--good);
+  stroke-width: 1.5;
+}
+
+.map__pin circle {
+  fill: var(--ink);
+  stroke: var(--paper);
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+}
+
+.map__pin.is-correct circle {
+  fill: var(--good);
+}
+
+.map__pin text {
+  font-family: var(--mono);
+  font-weight: 500;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.map__needle path:first-child {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.map__needle path:last-child {
+  fill: var(--accent);
+}
+
+.map__pin text.map__km {
+  font-weight: 400;
+  fill: var(--muted);
+}
+
+.map figcaption {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* ---------- Colophon ---------- */
+
+.colophon {
+  margin-top: 56px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.colophon h2 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+
+.colophon p {
+  margin: 0 0 10px;
+  max-width: 34em;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 520px) {
+  .page {
+    padding: 18px 16px 48px;
+  }
+  .ledger__row {
+    grid-template-columns: 16px minmax(0, 1fr) 76px 48px 40px;
+    gap: 8px;
+  }
+  .ledger__name {
+    font-size: 17px;
+  }
+  .ledger__row .num {
+    font-size: 13px;
+  }
+  .prox__bar,
+  .dir__label {
+    display: none;
+  }
+  .stats dd {
+    font-size: 24px;
+  }
+  .practice-bar {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .next {
+    text-align: left;
+  }
+  .result__headline {
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .needle {
+    transition: none;
+  }
+}
+
+/* Header cells share alignment classes with data cells; keep them at label size. */
+.ledger__head > span,
+.ledger__head > span.num {
+  font-size: 11px;
+}
